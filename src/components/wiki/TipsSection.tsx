@@ -86,14 +86,14 @@ export function TipsSection({ pageId }: { pageId: string }) {
       {/* Header */}
       <div className="flex items-center justify-between mb-4">
         <div>
-          <h3 className="text-lg font-semibold text-slate-900">💡 Things I Wish I&apos;d Known</h3>
-          <p className="text-sm text-slate-500 mt-0.5">
+          <h3 className="text-lg font-semibold text-text">💡 Things I Wish I&apos;d Known</h3>
+          <p className="text-sm text-text-secondary mt-0.5">
             Crowd-sourced tips from doctors who&apos;ve been here. Upvote the useful ones.
           </p>
         </div>
         <button
           onClick={() => setShowForm(!showForm)}
-          className="px-4 py-2 bg-amber-100 text-amber-800 text-sm font-medium rounded-lg hover:bg-amber-200 transition"
+          className="px-4 py-2 bg-primary-light text-primary-dark text-sm font-medium rounded-lg hover:bg-primary-light transition"
         >
           + Add Tip
         </button>
@@ -101,12 +101,12 @@ export function TipsSection({ pageId }: { pageId: string }) {
 
       {/* New tip form */}
       {showForm && (
-        <div className="mb-4 p-4 bg-amber-50 border border-amber-200 rounded-xl">
+        <div className="mb-4 p-4 bg-primary-pale border border-primary/20 rounded-xl">
           <textarea
             value={newTip}
             onChange={(e) => setNewTip(e.target.value)}
             placeholder="e.g. The phlebotomy round starts at 07:15 not 07:30"
-            className="w-full px-4 py-3 rounded-lg border border-amber-300 focus:border-amber-500 focus:ring-2 focus:ring-amber-200 outline-none text-sm text-slate-900 resize-none"
+            className="w-full px-4 py-3 rounded-lg border border-border focus:border-primary focus:ring-2 focus:ring-primary-light outline-none text-sm text-text resize-none"
             rows={3}
             autoFocus
           />
@@ -114,13 +114,13 @@ export function TipsSection({ pageId }: { pageId: string }) {
             <button
               onClick={handleSubmitTip}
               disabled={!newTip.trim() || loading}
-              className="px-4 py-1.5 bg-amber-600 text-white text-sm font-medium rounded-lg hover:bg-amber-700 disabled:opacity-50 transition"
+              className="px-4 py-1.5 bg-primary text-white text-sm font-medium rounded-lg hover:bg-primary-hover disabled:opacity-50 transition"
             >
               {loading ? 'Posting...' : 'Post Tip'}
             </button>
             <button
               onClick={() => { setShowForm(false); setNewTip(''); }}
-              className="px-3 py-1.5 text-sm text-slate-500 hover:text-slate-700"
+              className="px-3 py-1.5 text-sm text-text-secondary hover:text-text"
             >
               Cancel
             </button>
@@ -130,17 +130,17 @@ export function TipsSection({ pageId }: { pageId: string }) {
 
       {/* Tips list */}
       {tips.length === 0 ? (
-        <div className="text-center py-8 bg-white rounded-xl border">
+        <div className="text-center py-8 bg-surface rounded-xl border">
           <p className="text-4xl mb-2">🔰</p>
-          <p className="text-slate-500 text-sm">No tips yet. Be the first to share!</p>
+          <p className="text-text-secondary text-sm">No tips yet. Be the first to share!</p>
         </div>
       ) : (
         <div className="space-y-3">
           {tips.map(tip => (
             <div
               key={tip.id}
-              className={`bg-white rounded-xl border p-4 transition ${
-                tip.is_promoted ? 'border-green-300 bg-green-50/50' : 'border-slate-200'
+              className={`bg-surface rounded-xl border p-4 transition ${
+                tip.is_promoted ? 'border-success bg-success-light/50' : 'border-border'
               }`}
             >
               <div className="flex gap-3">
@@ -150,15 +150,15 @@ export function TipsSection({ pageId }: { pageId: string }) {
                     onClick={() => handleVote(tip.id, 1)}
                     className={`w-8 h-7 flex items-center justify-center rounded text-sm transition ${
                       tip.user_vote === 1
-                        ? 'text-amber-600 bg-amber-100'
-                        : 'text-slate-400 hover:text-amber-600 hover:bg-amber-50'
+                        ? 'text-primary bg-primary-light'
+                        : 'text-text-muted hover:text-primary hover:bg-primary-pale'
                     }`}
                     title="Upvote"
                   >
                     ▲
                   </button>
                   <span className={`text-xs font-bold tabular-nums ${
-                    score(tip) > 0 ? 'text-amber-600' : score(tip) < 0 ? 'text-red-500' : 'text-slate-400'
+                    score(tip) > 0 ? 'text-primary' : score(tip) < 0 ? 'text-error' : 'text-text-muted'
                   }`}>
                     {score(tip)}
                   </span>
@@ -166,8 +166,8 @@ export function TipsSection({ pageId }: { pageId: string }) {
                     onClick={() => handleVote(tip.id, -1)}
                     className={`w-8 h-7 flex items-center justify-center rounded text-sm transition ${
                       tip.user_vote === -1
-                        ? 'text-red-500 bg-red-100'
-                        : 'text-slate-400 hover:text-red-500 hover:bg-red-50'
+                        ? 'text-error bg-error-light'
+                        : 'text-text-muted hover:text-error hover:bg-error-light'
                     }`}
                     title="Downvote"
                   >
@@ -177,18 +177,18 @@ export function TipsSection({ pageId }: { pageId: string }) {
 
                 {/* Content */}
                 <div className="flex-1 min-w-0">
-                  <p className="text-sm text-slate-800 leading-relaxed">{tip.content}</p>
+                  <p className="text-sm text-text leading-relaxed">{tip.content}</p>
                   <div className="flex items-center gap-2 mt-2">
-                    <span className="text-xs text-slate-400">
+                    <span className="text-xs text-text-muted">
                       {tip.author?.full_name || tip.author?.email?.split('@')[0] || 'Anonymous'}
                     </span>
                     {tip.is_verified && (
-                      <span className="text-xs px-1.5 py-0.5 bg-green-100 text-green-700 rounded font-medium">
+                      <span className="text-xs px-1.5 py-0.5 bg-success-light text-success rounded font-medium">
                         ✓ Verified
                       </span>
                     )}
                     {tip.is_promoted && (
-                      <span className="text-xs px-1.5 py-0.5 bg-blue-100 text-blue-700 rounded font-medium">
+                      <span className="text-xs px-1.5 py-0.5 bg-primary-light text-primary rounded font-medium">
                         📌 Promoted
                       </span>
                     )}

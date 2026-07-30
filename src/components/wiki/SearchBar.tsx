@@ -21,11 +21,11 @@ export function SearchBar({ trustId }: { trustId: string }) {
         value={query}
         onChange={(e) => setQuery(e.target.value)}
         placeholder="Search pages, tips, protocols..."
-        className="w-full px-4 py-3 pl-10 rounded-xl border border-slate-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 outline-none transition text-slate-900 text-sm"
+        className="w-full px-4 py-3 pl-10 rounded-xl border border-border focus:border-primary focus:ring-2 focus:ring-primary-light outline-none transition text-text text-sm"
       />
       <button
         type="submit"
-        className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-lg"
+        className="absolute left-3 top-1/2 -translate-y-1/2 text-text-muted text-lg"
       >
         🔍
       </button>

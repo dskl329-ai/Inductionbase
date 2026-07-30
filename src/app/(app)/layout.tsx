@@ -15,10 +15,10 @@ export default async function AppLayout({ children }: { children: React.ReactNod
 
   return (
     <>
-      <header className="border-b bg-white sticky top-0 z-50">
+      <header className="border-b bg-surface sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-4 h-14 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <Link href="/dashboard" className="flex items-center gap-2 font-bold text-lg text-slate-900">
+            <Link href="/dashboard" className="flex items-center gap-2 font-bold text-lg text-text">
               <span>🏥</span>
               <span className="hidden sm:inline">Inductionbase</span>
             </Link>
@@ -26,12 +26,12 @@ export default async function AppLayout({ children }: { children: React.ReactNod
           </div>
           <div className="flex items-center gap-3">
             {user && (
-              <span className="text-xs text-slate-500 hidden sm:inline">
+              <span className="text-xs text-text-secondary hidden sm:inline">
                 {user.email}
               </span>
             )}
             <form action="/auth/signout" method="post">
-              <button className="text-sm text-slate-600 hover:text-slate-900 transition">
+              <button className="text-sm text-text-secondary hover:text-text transition">
                 Sign out
               </button>
             </form>

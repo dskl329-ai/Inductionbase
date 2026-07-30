@@ -10,8 +10,8 @@ export default async function NewWikiPage({
   return (
     <div className="max-w-4xl">
       <div className="mb-6">
-        <h1 className="text-2xl font-bold text-slate-900">Create New Page</h1>
-        <p className="text-sm text-slate-500 mt-1">
+        <h1 className="text-2xl font-bold text-text">Create New Page</h1>
+        <p className="text-sm text-text-secondary mt-1">
           Fill in the details below and start writing.
         </p>
       </div>

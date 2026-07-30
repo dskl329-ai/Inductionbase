@@ -52,7 +52,7 @@ export function PageEditor({ page, mode = 'edit', defaultTrust, defaultCategory 
       }),
       LinkExtension.configure({
         openOnClick: false,
-        HTMLAttributes: { class: 'text-blue-600 underline' },
+        HTMLAttributes: { class: 'text-primary underline' },
       }),
       Highlight,
       Underline,
@@ -149,16 +149,16 @@ export function PageEditor({ page, mode = 'edit', defaultTrust, defaultCategory 
   return (
     <div className="space-y-6">
       {/* Form fields */}
-      <div className="bg-white rounded-xl border p-6 space-y-4">
+      <div className="bg-surface rounded-xl border p-6 space-y-4">
         {/* Title */}
         <div>
-          <label className="block text-sm font-medium text-slate-700 mb-1">Page Title</label>
+          <label className="block text-sm font-medium text-text mb-1">Page Title</label>
           <input
             type="text"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
             placeholder="e.g. Ward 7A Survival Guide"
-            className="w-full px-4 py-2.5 text-lg font-semibold rounded-lg border border-slate-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 outline-none transition text-slate-900"
+            className="w-full px-4 py-2.5 text-lg font-semibold rounded-lg border border-border focus:border-primary focus:ring-2 focus:ring-primary-light outline-none transition text-text"
           />
         </div>
 
@@ -166,11 +166,11 @@ export function PageEditor({ page, mode = 'edit', defaultTrust, defaultCategory 
         {mode === 'create' && (
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
             <div>
-              <label className="block text-sm font-medium text-slate-700 mb-1">Trust</label>
+              <label className="block text-sm font-medium text-text mb-1">Trust</label>
               <select
                 value={trustSlug}
                 onChange={(e) => setTrustSlug(e.target.value)}
-                className="w-full px-3 py-2 rounded-lg border border-slate-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 outline-none text-sm text-slate-900"
+                className="w-full px-3 py-2 rounded-lg border border-border focus:border-primary focus:ring-2 focus:ring-primary-light outline-none text-sm text-text"
               >
                 {SEVERN_TRUSTS.map(t => (
                   <option key={t.slug} value={t.slug}>{t.short_name}</option>
@@ -178,11 +178,11 @@ export function PageEditor({ page, mode = 'edit', defaultTrust, defaultCategory 
               </select>
             </div>
             <div>
-              <label className="block text-sm font-medium text-slate-700 mb-1">Category</label>
+              <label className="block text-sm font-medium text-text mb-1">Category</label>
               <select
                 value={categorySlug}
                 onChange={(e) => setCategorySlug(e.target.value)}
-                className="w-full px-3 py-2 rounded-lg border border-slate-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 outline-none text-sm text-slate-900"
+                className="w-full px-3 py-2 rounded-lg border border-border focus:border-primary focus:ring-2 focus:ring-primary-light outline-none text-sm text-text"
               >
                 {DEFAULT_CATEGORIES.map(c => (
                   <option key={c.slug} value={c.slug}>{c.icon} {c.name}</option>
@@ -190,11 +190,11 @@ export function PageEditor({ page, mode = 'edit', defaultTrust, defaultCategory 
               </select>
             </div>
             <div>
-              <label className="block text-sm font-medium text-slate-700 mb-1">Updated for Cohort</label>
+              <label className="block text-sm font-medium text-text mb-1">Updated for Cohort</label>
               <select
                 value={cohort}
                 onChange={(e) => setCohort(e.target.value)}
-                className="w-full px-3 py-2 rounded-lg border border-slate-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 outline-none text-sm text-slate-900"
+                className="w-full px-3 py-2 rounded-lg border border-border focus:border-primary focus:ring-2 focus:ring-primary-light outline-none text-sm text-text"
               >
                 {ROTATION_COHORTS.map(c => (
                   <option key={c} value={c}>{c}</option>
@@ -207,11 +207,11 @@ export function PageEditor({ page, mode = 'edit', defaultTrust, defaultCategory 
         {/* Cohort (edit mode) */}
         {mode === 'edit' && (
           <div className="max-w-[200px]">
-            <label className="block text-sm font-medium text-slate-700 mb-1">Updated for Cohort</label>
+            <label className="block text-sm font-medium text-text mb-1">Updated for Cohort</label>
             <select
               value={cohort}
               onChange={(e) => setCohort(e.target.value)}
-              className="w-full px-3 py-2 rounded-lg border border-slate-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 outline-none text-sm text-slate-900"
+              className="w-full px-3 py-2 rounded-lg border border-border focus:border-primary focus:ring-2 focus:ring-primary-light outline-none text-sm text-text"
             >
               {ROTATION_COHORTS.map(c => (
                 <option key={c} value={c}>{c}</option>
@@ -222,9 +222,9 @@ export function PageEditor({ page, mode = 'edit', defaultTrust, defaultCategory 
       </div>
 
       {/* Editor */}
-      <div className="bg-white rounded-xl border overflow-hidden">
+      <div className="bg-surface rounded-xl border overflow-hidden">
         {/* Toolbar */}
-        <div className="border-b px-3 py-2 flex flex-wrap gap-1 items-center bg-slate-50">
+        <div className="border-b px-3 py-2 flex flex-wrap gap-1 items-center bg-cream">
           <ToolbarGroup>
             <ToolbarButton
               onClick={() => editor.chain().focus().toggleHeading({ level: 1 }).run()}
@@ -324,13 +324,13 @@ export function PageEditor({ page, mode = 'edit', defaultTrust, defaultCategory 
       </div>
 
       {/* Character count */}
-      <div className="text-xs text-slate-400 text-right">
+      <div className="text-xs text-text-muted text-right">
         {editor.storage.characterCount.characters()} characters
       </div>
 
       {/* Error */}
       {error && (
-        <div className="p-3 bg-red-50 border border-red-200 rounded-lg text-sm text-red-700">
+        <div className="p-3 bg-error-light border border-error/30 rounded-lg text-sm text-error">
           {error}
         </div>
       )}
@@ -340,18 +340,18 @@ export function PageEditor({ page, mode = 'edit', defaultTrust, defaultCategory 
         <button
           onClick={handleSave}
           disabled={saving || !title.trim()}
-          className="px-6 py-2.5 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition text-sm"
+          className="px-6 py-2.5 bg-primary text-white font-medium rounded-lg hover:bg-primary-hover disabled:opacity-50 disabled:cursor-not-allowed transition text-sm"
         >
           {saving ? 'Saving...' : saved ? '✓ Saved!' : 'Save Page'}
         </button>
         <button
           onClick={() => router.back()}
-          className="px-4 py-2 text-sm text-slate-600 hover:text-slate-900 transition"
+          className="px-4 py-2 text-sm text-text-secondary hover:text-text transition"
         >
           Cancel
         </button>
         {saved && (
-          <span className="text-sm text-green-600">Redirecting...</span>
+          <span className="text-sm text-success">Redirecting...</span>
         )}
       </div>
     </div>
@@ -383,7 +383,7 @@ function ToolbarButton({
       disabled={disabled}
       title={title}
       className={`min-w-[32px] h-8 px-2 flex items-center justify-center rounded text-sm font-medium transition-colors
-        ${active ? 'bg-blue-100 text-blue-700' : 'text-slate-600 hover:bg-slate-200'}
+        ${active ? 'bg-primary-light text-primary' : 'text-text-secondary hover:bg-warning-light'}
         ${disabled ? 'opacity-30 cursor-not-allowed' : 'cursor-pointer'}
       `}
     >

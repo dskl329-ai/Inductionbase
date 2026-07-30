@@ -33,7 +33,7 @@ export function TrustSwitcher() {
     <select
       value={activeSlug || ''}
       onChange={(e) => handleChange(e.target.value)}
-      className="text-sm bg-slate-100 border-0 rounded-lg px-3 py-1.5 text-slate-700 font-medium cursor-pointer focus:ring-2 focus:ring-blue-200 outline-none"
+      className="text-sm bg-warning-light border-0 rounded-lg px-3 py-1.5 text-text font-medium cursor-pointer focus:ring-2 focus:ring-primary-light outline-none"
     >
       <option value="" disabled>Select trust</option>
       {trusts.map((t: any) => (

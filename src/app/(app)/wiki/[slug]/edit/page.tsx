@@ -25,11 +25,11 @@ export default async function EditWikiPage({
   return (
     <div className="max-w-4xl">
       <div className="mb-6">
-        <h1 className="text-2xl font-bold text-slate-900">
+        <h1 className="text-2xl font-bold text-text">
           {page ? `Editing: ${page.title}` : `Editing: ${slug}`}
         </h1>
         {page && (
-          <p className="text-sm text-slate-500 mt-1">
+          <p className="text-sm text-text-secondary mt-1">
             {page.trust?.short_name} · {page.category?.name}
           </p>
         )}
