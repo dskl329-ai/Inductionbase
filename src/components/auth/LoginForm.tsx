@@ -1,7 +1,8 @@
 'use client';
 
 import { createClient } from '@/lib/supabase/client';
-import { useState } from 'react';
+import { useState, useEffect, useCallback } from 'react';
+import { useRouter, useSearchParams } from 'next/navigation';
 
 export function LoginForm() {
   const [email, setEmail] = useState('');
@@ -9,6 +10,27 @@ export function LoginForm() {
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const supabase = createClient();
+  const router = useRouter();
+  const searchParams = useSearchParams();
+
+  // Handle magic link callback — exchange code for session
+  const handleCallback = useCallback(async () => {
+    const code = searchParams?.get('code');
+    if (!code || !supabase) return;
+
+    setLoading(true);
+    const { error: exchangeError } = await supabase.auth.exchangeCodeForSession(code);
+    if (exchangeError) {
+      setError('Login link expired or invalid. Please request a new one.');
+    } else {
+      router.replace('/dashboard');
+    }
+    setLoading(false);
+  }, [searchParams, supabase, router]);
+
+  useEffect(() => {
+    handleCallback();
+  }, [handleCallback]);
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -34,7 +56,7 @@ export function LoginForm() {
     const { error: loginError } = await supabase.auth.signInWithOtp({
       email,
       options: {
-        emailRedirectTo: `${window.location.origin}/dashboard`,
+        emailRedirectTo: `${window.location.origin}/login`,
       },
     });
 
@@ -45,6 +67,18 @@ export function LoginForm() {
     }
     setLoading(false);
   };
+
+  // Show loading state while processing callback
+  if (loading && searchParams?.get('code')) {
+    return (
+      <div className="flex min-h-[calc(100vh-4rem)] items-center justify-center px-4">
+        <div className="text-center">
+          <div className="text-4xl mb-4 animate-pulse">🔐</div>
+          <p className="text-slate-600">Verifying your login...</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="flex min-h-[calc(100vh-4rem)] items-center justify-center px-4">
