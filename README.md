@@ -1,36 +1,117 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Inductionbase 🏥
+
+**Wikipedia-style onboarding for NHS doctors. Free. Community-maintained. No paywalls.**
+
+## What It Solves
+
+Every six months, thousands of doctors rotate into new NHS trusts. The first 2-4 weeks are chaos — finding bleep numbers, ward layouts, consultant preferences, IT logins. This knowledge lives in WhatsApp chats and oral tradition. Inductionbase fixes that.
+
+## How It Works
+
+- **Trust-level wikis** with pre-loaded categories (Wards, Theatres, IT, On-call, Mess, etc.)
+- **NHS email gating** — register with your @nhs.net or @nhs.uk email
+- **Reddit-style engagement** — upvote/downvote tips, verify useful information
+- **Rotation freshness** — pages stamped by cohort, stale content flagged automatically
+- **Community-maintained** — anyone can edit, version history tracks everything
+- **Mobile-first** — works on your phone between cases
+
+## Tech Stack
+
+| Layer | Technology |
+|-------|-----------|
+| Framework | Next.js 14 (App Router) |
+| Language | TypeScript |
+| Styling | Tailwind CSS |
+| Database | PostgreSQL (Supabase) |
+| Auth | Supabase Auth (magic links, NHS email gating) |
+| Editor | TipTap (Notion-style rich text) |
+| Hosting | Vercel |
+| Mobile | PWA (installable, offline-capable) |
 
 ## Getting Started
 
-First, run the development server:
+### Prerequisites
+
+1. **Supabase project** — sign up at [supabase.com](https://supabase.com), create a project
+2. Copy `NEXT_PUBLIC_SUPABASE_URL` and `NEXT_PUBLIC_SUPABASE_ANON_KEY` from Supabase Settings > API
+3. Paste them into `.env.local`
+
+### Database Setup
+
+Run the SQL in `supabase-schema.sql` in your Supabase SQL Editor. This creates:
+- Tables: `trusts`, `profiles`, `categories`, `pages`, `page_versions`, `tips`, `tip_votes`, `comments`
+- Row-Level Security policies
+- Full-text search via `pg_trgm`
+
+### Run Locally
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Visit `http://localhost:3000`.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Deploy
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new)
 
-## Learn More
+Or manually:
 
-To learn more about Next.js, take a look at the following resources:
+```bash
+npm run build
+npm start
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Project Structure
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```
+src/
+├── app/
+│   ├── (auth)/           # Login, magic-link callback
+│   │   ├── login/
+│   │   └── layout.tsx
+│   ├── (app)/            # Authenticated routes
+│   │   ├── dashboard/    # Trust selector
+│   │   ├── trust/[slug]/ # Trust-level wiki home
+│   │   ├── wiki/[slug]/  # Individual page (read)
+│   │   │   └── edit/     # Edit page
+│   │   └── layout.tsx
+│   ├── auth/signout/     # Sign-out route
+│   └── page.tsx          # Root redirect
+├── components/
+│   ├── auth/LoginForm.tsx
+│   ├── ui/TrustSwitcher.tsx
+│   └── wiki/
+│       ├── PageEditor.tsx
+│       ├── SearchBar.tsx
+│       ├── TipsSection.tsx  # Reddit-style tips feed
+│       └── CommentSection.tsx
+├── lib/supabase/
+│   ├── client.ts         # Browser client
+│   └── server.ts         # Server client
+├── types/index.ts        # TypeScript types + constants
+└── middleware.ts          # Auth guard
+```
 
-## Deploy on Vercel
+## Phase Roadmap
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- [x] Phase 0: Name + tech decisions
+- [ ] Phase 1: Scaffold (this repo)
+- [ ] Phase 2: Core features (editor, tips, search)
+- [ ] Phase 3: Trust features (multi-trust, rotation freshness)
+- [ ] Phase 4: Polish & launch (PWA, content seeding, beta)
+- [ ] Phase 5: Scale (analytics, cross-trust, templates)
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Severn Trusts (v1 Target)
+
+- UHBW (University Hospitals Bristol and Weston) 🏠
+- NBT (North Bristol NHS Trust)
+- RUH Bath (Royal United Hospitals Bath)
+- Gloucestershire Hospitals
+- Yeovil District Hospital
+- Great Western Hospitals (Swindon)
+
+## Built By
+
+Dan Liu — ST8 HPB Surgery, Severn Deanery. Built because the alternative (asking the same questions every rotation) was driving everyone mad.
